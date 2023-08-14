@@ -29,8 +29,11 @@ public class Neighbour {
      * Constructor
      *
      * @param id
+     *         Identifier
      * @param name
+     *         Custom name
      * @param avatarUrl
+     *         URL pointing to the avatar
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
                      String phoneNumber, String aboutMe) {

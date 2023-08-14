@@ -96,7 +96,7 @@ public class NeighbourFragment extends Fragment {
     /**
      * Fired if the user clicks on a delete button
      *
-     * @param event
+     * @param event The event allowing to delete a neighbour
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {

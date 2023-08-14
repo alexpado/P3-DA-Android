@@ -46,6 +46,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
      * Used to navigate to this activity
      *
      * @param activity
+     *         The {@link FragmentActivity} that will be used as context for the {@link Intent}.
      */
     public static void navigate(FragmentActivity activity) {
 
