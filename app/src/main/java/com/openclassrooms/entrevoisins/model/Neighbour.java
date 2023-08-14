@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Model object representing a Neighbour
+ * @noinspection unused, unused, unused, unused, unused, unused, unused, unused, unused, unused
  */
 public class Neighbour {
 
@@ -16,7 +17,7 @@ public class Neighbour {
     /** Avatar */
     private String avatarUrl;
 
-    /** Adress */
+    /** Address */
     private String address;
 
     /** Phone number */

@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class DummyNeighbourGenerator {
 
-    public static List<Neighbour> DUMMY_NEIGHBOURS = Arrays.asList(
+    public static final List<Neighbour> DUMMY_NEIGHBOURS = Arrays.asList(
             new Neighbour(1,
                           "Caroline",
                           "https://i.pravatar.cc/150?u=a042581f4e29026704d",
