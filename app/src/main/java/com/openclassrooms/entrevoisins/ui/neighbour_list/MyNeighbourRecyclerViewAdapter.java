@@ -29,7 +29,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
 
-        mNeighbours = items;
+        this.mNeighbours = items;
     }
 
     @NonNull
@@ -51,7 +51,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
              .apply(RequestOptions.circleCropTransform())
              .into(holder.mNeighbourAvatar);
 
-        holder.mDeleteButton.setOnClickListener(v -> EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour)));
+        DeleteNeighbourEvent event = new DeleteNeighbourEvent(neighbour);
+        holder.mDeleteButton.setOnClickListener(v -> EventBus.getDefault().post(event));
     }
 
     @Override

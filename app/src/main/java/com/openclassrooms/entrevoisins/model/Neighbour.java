@@ -1,10 +1,12 @@
 package com.openclassrooms.entrevoisins.model;
 
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Model object representing a Neighbour
- * @noinspection unused, unused, unused, unused, unused, unused, unused, unused, unused, unused
+ *
+ * @noinspection unused
  */
 public class Neighbour {
 
@@ -25,6 +27,12 @@ public class Neighbour {
 
     /** About me */
     private String aboutMe;
+
+    /**
+     * Is favorite ?
+     * TODO: Set to false by default when detail view will be available
+     */
+    private boolean favorite = new Random().nextBoolean();
 
     /**
      * Constructor
@@ -105,6 +113,16 @@ public class Neighbour {
     public void setAboutMe(String aboutMe) {
 
         this.aboutMe = aboutMe;
+    }
+
+    public boolean isFavorite() {
+
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+
+        this.favorite = favorite;
     }
 
     @Override

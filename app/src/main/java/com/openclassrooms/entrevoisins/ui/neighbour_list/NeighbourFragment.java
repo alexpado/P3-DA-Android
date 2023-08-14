@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.enums.NeighbourListMode;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
@@ -25,18 +26,27 @@ import java.util.List;
 
 public class NeighbourFragment extends Fragment {
 
-    private NeighbourApiService mApiService;
-    private RecyclerView        mRecyclerView;
+    private final NeighbourListMode   mode;
+    private       NeighbourApiService mApiService;
+    private       RecyclerView        mRecyclerView;
 
+    public NeighbourFragment(NeighbourListMode mode) {
+
+        this.mode = mode;
+    }
 
     /**
-     * Create and return a new instance
+     * Create a new instance of this {@link NeighbourFragment} associated to a specific list type
+     * defined by the provided {@link NeighbourListMode}.
      *
-     * @return @{@link NeighbourFragment}
+     * @param mode
+     *         The list display
+     *
+     * @return An instance with a specific behaviour.
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(NeighbourListMode mode) {
 
-        return new NeighbourFragment();
+        return new NeighbourFragment(mode);
     }
 
     @Override
@@ -47,8 +57,7 @@ public class NeighbourFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View    view    = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
@@ -66,8 +75,18 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
 
-        List<Neighbour> mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        switch (this.mode) {
+            case ALL: {
+                List<Neighbour> neighbours = this.mApiService.getNeighbours();
+                this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
+                break;
+            }
+            case FAVORITES: {
+                List<Neighbour> neighbours = this.mApiService.getFavoriteNeighbours();
+                this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
+                break;
+            }
+        }
     }
 
     @Override
@@ -94,12 +113,13 @@ public class NeighbourFragment extends Fragment {
     /**
      * Fired if the user clicks on a delete button
      *
-     * @param event The event allowing to delete a neighbour
+     * @param event
+     *         The event allowing to delete a neighbour
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
 
-        mApiService.deleteNeighbour(event.neighbour);
+        this.mApiService.deleteNeighbour(event.getNeighbour());
         initList();
     }
 
