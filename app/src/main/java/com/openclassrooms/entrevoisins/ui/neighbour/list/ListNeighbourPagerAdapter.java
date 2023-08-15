@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.neighbour.list;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
