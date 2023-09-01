@@ -1,11 +1,9 @@
 package com.openclassrooms.entrevoisins.ui.neighbour.list;
 
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.NeighbourClickedEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,6 +29,12 @@ public class FavoriteNeighbourFragment extends NeighbourFragment {
 
         List<Neighbour> neighbours = this.mApiService.getFavoriteNeighbours();
         this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
+    }
+
+    @Override
+    public int getLayout() {
+
+        return R.layout.fragment_fav_neighbour_list;
     }
 
     @Override
