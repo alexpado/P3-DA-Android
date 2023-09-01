@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.service;
 
+import androidx.annotation.Nullable;
+
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
@@ -12,6 +14,27 @@ public class DummyNeighbourApiService implements NeighbourApiService {
 
     private final List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
 
+    /**
+     * Find any {@link Neighbour} matching the provided identifier.
+     *
+     * @param neighbourId
+     *         The {@link Neighbour}'s identifier
+     *
+     * @return An optional {@link Neighbour}. Will be {@code null} if no {@link Neighbour} with the
+     *         provided id was found.
+     */
+    @Nullable
+    @Override
+    public Neighbour findById(long neighbourId) {
+
+        for (Neighbour neighbour : this.getNeighbours()) {
+            if (neighbour.getId() == neighbourId) {
+                return neighbour;
+            }
+        }
+
+        return null;
+    }
 
     /**
      * {@inheritDoc}
