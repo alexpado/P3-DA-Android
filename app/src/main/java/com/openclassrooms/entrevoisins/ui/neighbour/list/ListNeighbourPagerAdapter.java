@@ -22,7 +22,14 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        return NeighbourFragment.newInstance(NeighbourListMode.fromPage(position));
+        switch (NeighbourListMode.fromPage(position)) {
+            case ALL:
+                return NeighbourFragment.newInstance();
+            case FAVORITES:
+                return FavoriteNeighbourFragment.newInstance();
+            default:
+                throw new IllegalStateException("Unknown mode");
+        }
     }
 
     /**

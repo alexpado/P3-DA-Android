@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour.list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,38 +16,29 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.enums.NeighbourListMode;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.NeighbourClickedEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+import com.openclassrooms.entrevoisins.ui.neighbour.details.NeighbourDetailActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-
 public class NeighbourFragment extends Fragment {
 
-    private final NeighbourListMode   mode;
-    private       NeighbourApiService mApiService;
-    private       RecyclerView        mRecyclerView;
-
-    public NeighbourFragment(NeighbourListMode mode) {
-
-        this.mode = mode;
-    }
+    NeighbourApiService mApiService;
+    RecyclerView        mRecyclerView;
 
     /**
-     * Create a new instance of this {@link NeighbourFragment} associated to a specific list type
-     * defined by the provided {@link NeighbourListMode}.
-     *
-     * @param mode
-     *         The list display
+     * Create a new instance of this {@link NeighbourFragment}
      *
      * @return An instance with a specific behaviour.
      */
-    public static NeighbourFragment newInstance(NeighbourListMode mode) {
+    public static NeighbourFragment newInstance() {
 
-        return new NeighbourFragment(mode);
+        return new NeighbourFragment();
     }
 
     @Override
@@ -75,18 +67,8 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
 
-        switch (this.mode) {
-            case ALL: {
-                List<Neighbour> neighbours = this.mApiService.getNeighbours();
-                this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
-                break;
-            }
-            case FAVORITES: {
-                List<Neighbour> neighbours = this.mApiService.getFavoriteNeighbours();
-                this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
-                break;
-            }
-        }
+        List<Neighbour> neighbours = this.mApiService.getNeighbours();
+        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
     }
 
     @Override
@@ -100,14 +82,18 @@ public class NeighbourFragment extends Fragment {
     public void onStart() {
 
         super.onStart();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
     public void onStop() {
 
         super.onStop();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /**
@@ -121,6 +107,12 @@ public class NeighbourFragment extends Fragment {
 
         this.mApiService.deleteNeighbour(event.getNeighbour());
         initList();
+    }
+
+    @Subscribe
+    public void onNeighbourClicked(NeighbourClickedEvent event) {
+
+        NeighbourDetailActivity.navigate(this.getActivity(), event.getNeighbour().getId());
     }
 
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Entrevoisins</string>
+    <string name="tab_neighbour_title">Mes voisins</string>
+    <string name="tab_favorites_title">Favoris</string>
+    <string name="activity_new_neighbour">Nouveau voisin</string>
+    <string name="activity_view_neighbour">A propos du voisin</string>
+    <string name="message_favorite_added">Ce voisin a été ajouté à vos favoris</string>
+    <string name="message_favorite_remove">Ce voisin a été supprimé de vos favoris</string>
+    <string name="label_about_me">A propos</string>
+</resources>

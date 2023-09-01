@@ -1,7 +1,6 @@
 package com.openclassrooms.entrevoisins.model;
 
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Model object representing a Neighbour
@@ -30,9 +29,8 @@ public class Neighbour {
 
     /**
      * Is favorite ?
-     * TODO: Set to false by default when detail view will be available
      */
-    private boolean favorite = new Random().nextBoolean();
+    private boolean favorite;
 
     /**
      * Constructor
@@ -50,9 +48,10 @@ public class Neighbour {
         this.id          = id;
         this.name        = name;
         this.avatarUrl   = avatarUrl;
-        this.address     = address;
+        this.address     = address.replace("5km", String.format("%skm", this.id));
         this.phoneNumber = phoneNumber;
         this.aboutMe     = aboutMe;
+        this.favorite    = false;
     }
 
     public long getId() {
