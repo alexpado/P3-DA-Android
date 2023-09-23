@@ -1,24 +1,6 @@
 
 package com.openclassrooms.entrevoisins.ui.neighbour.list;
 
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.espresso.intent.rule.IntentsTestRule;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.ui.neighbour.details.NeighbourDetailActivity;
-import com.openclassrooms.entrevoisins.ui.neighbour.list.ListNeighbourActivity;
-import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -29,6 +11,23 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
 
+import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.ui.neighbour.details.NeighbourDetailActivity;
+import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.Objects;
+import java.util.function.Predicate;
 
 
 /**
@@ -47,6 +46,7 @@ public class NeighboursListTest {
 
     @Before
     public void setUp() {
+
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
     }
@@ -72,13 +72,23 @@ public class NeighboursListTest {
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT - 1));
+    }
+
+    @Test
+    public void myNeighbourList_clickAction_shouldChangeTab() {
+
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
+        onView(ViewMatchers.withId(R.id.tabItem2)).perform(click());
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(0));
     }
 
     @Test
     public void myNeighbourList_clickAction_shouldOpenNewActivity() {
+
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         intended(hasComponent(NeighbourDetailActivity.class.getName()));
     }
+
 }
