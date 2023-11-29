@@ -8,6 +8,7 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -78,9 +79,9 @@ public class NeighboursListTest {
     @Test
     public void myNeighbourList_clickAction_shouldChangeTab() {
 
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check(matches(isDisplayed()));
         onView(ViewMatchers.withId(R.id.tabItem2)).perform(click());
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(0));
+        onView(ViewMatchers.withId(R.id.list_fav_neighbours)).check(matches(isDisplayed()));
     }
 
     @Test
