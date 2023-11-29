@@ -1,22 +1,35 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.neighbour.list;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.openclassrooms.entrevoisins.enums.NeighbourListMode;
 
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
     public ListNeighbourPagerAdapter(FragmentManager fm) {
+
         super(fm);
     }
 
     /**
      * getItem is called to instantiate the fragment for the given page.
      */
+    @NonNull
     @Override
     public Fragment getItem(int position) {
-        return NeighbourFragment.newInstance();
+
+        switch (NeighbourListMode.fromPage(position)) {
+            case ALL:
+                return NeighbourFragment.newInstance();
+            case FAVORITES:
+                return FavoriteNeighbourFragment.newInstance();
+            default:
+                throw new IllegalStateException("Unknown mode");
+        }
     }
 
     /**
@@ -24,6 +37,8 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 1;
+
+        return 2;
     }
+
 }

@@ -3,4 +3,9 @@
     <string name="tab_neighbour_title">My neighbours</string>
     <string name="tab_favorites_title">Favorites</string>
     <string name="activity_new_neighbour">New neighbour</string>
+    <string name="activity_view_neighbour">About Neighbour</string>
+    <string name="label_about_me">About me</string>
+    <string name="message_favorite_added">This neighbour has been added to your favorites</string>
+    <string name="message_favorite_remove">This neighbour has been removed from your favorites</string>
+    <string name="lorem_ipsum" translatable="false">Lorem Ipsum</string>
 </resources>
