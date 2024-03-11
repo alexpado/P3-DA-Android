@@ -9,6 +9,8 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -18,7 +20,6 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.ui.neighbour.details.NeighbourDetailActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
@@ -26,9 +27,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Objects;
-import java.util.function.Predicate;
 
 
 /**
@@ -43,7 +41,8 @@ public class NeighboursListTest {
     private ListNeighbourActivity mActivity;
 
     @Rule
-    public IntentsTestRule<ListNeighbourActivity> mActivityRule = new IntentsTestRule<>(ListNeighbourActivity.class);
+    public IntentsTestRule<ListNeighbourActivity> mActivityRule = new IntentsTestRule<>(
+            ListNeighbourActivity.class);
 
     @Before
     public void setUp() {
@@ -90,6 +89,19 @@ public class NeighboursListTest {
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         intended(hasComponent(NeighbourDetailActivity.class.getName()));
+    }
+
+    @Test
+    public void myNeighbourList_favoriteAction_shouldAddAsFavorite() {
+
+        onView(ViewMatchers.withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+
+        onView(withId(R.id.toggle_favorite)).perform(click());
+        onView(withContentDescription("Navigate up")).perform(click());
+        onView(ViewMatchers.withId(R.id.tabItem2)).perform(click());
+        onView(ViewMatchers.withId(R.id.list_fav_neighbours)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.list_fav_neighbours)).check(matches(hasMinimumChildCount(1)));
     }
 
 }
